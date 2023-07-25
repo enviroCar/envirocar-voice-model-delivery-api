@@ -1,45 +1,50 @@
 import express from 'express'
 import passport from 'passport'
 import mongoose from 'mongoose'
-const { UniqueTokenStrategy } = require('passport-unique-token');
-require('dotenv').config();
+import { UniqueTokenStrategy } from 'passport-unique-token'
+import 'dotenv/config'
+import User from './model/user.js'
+import router from './routes/index.js'
 
-const routes = require('./routes');
+try{
+  await mongoose.connect(process.env.DB_STRING)
+  console.log("Connected to MongoDB.")
+}
+catch(e){
+  console.log(e)
+}
 
-await mongoose.connect(process.env.DB_STRING, () => { console.log("Connected to MongoDB.") });
-const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+const app = express()
 
-passport.use(new UniqueTokenStrategy((token, done) => {
-    User.findById(token,
-      (err, user) => {
-        if (err) {
-          return done(err);
-        }
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
 
-        if (!user) {
-          return done(null, false);
-        }
-
-        return done(null, user);
-      },
-    );
+passport.use(new UniqueTokenStrategy(async (token, done) => {
+  try{
+    const user = await User.findById(token)
+    if(user){
+        return done(null, user)
+    }
+    return done(null, false)
+  }
+  catch(e){
+    return done(e)
+  }
   }),
-);
+)
 
 
 
-app.use(routes);
+app.use(router)
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT
 
 
 app.listen(PORT , (err) => {
   if(err){
-    console.log(err);
+    console.log(err)
   }else{
-    console.log(`App is listening to port ` + PORT);
+    console.log(`App is listening to port ` + PORT)
   }
 });
