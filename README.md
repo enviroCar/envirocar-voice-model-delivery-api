@@ -19,7 +19,7 @@ Latest released model file must contain the word `latest` (Case Insensitive) in 
 ## Deploy
 - Start server
     ```sh
-    node run start
+    npm run start
     ```
 
 ## Endpoints
