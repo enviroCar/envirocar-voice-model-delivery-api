@@ -9,7 +9,7 @@ let models = fs.readdirSync("./assets")
 
 router.get('/', (req,res) => {
     logger.debug(`'/' called by ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}`)
-    
+
     res.send("enviroCar: Wake Word Model Delivery API ⚙")
 })
 
@@ -86,5 +86,9 @@ router.get('/models/:name', (req,res)=> {
     }
 
 });
+
+router.get('/*', (req,res)=>{
+    res.status(404).send("Invalid Endpoint: Refer to <a href='https://github.com/devAyushDubey/enviroCar-model-delivery-api#endpoints'>endpoints reference</a>")
+})
 
 export default router;
