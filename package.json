@@ -27,7 +27,8 @@
     "mongoose": "^7.4.0",
     "passport": "^0.6.0",
     "passport-http-bearer": "^1.0.1",
-    "passport-unique-token": "^3.0.0"
+    "passport-unique-token": "^3.0.0",
+    "winston": "^3.10.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
