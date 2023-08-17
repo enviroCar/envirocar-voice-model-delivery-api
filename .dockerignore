@@ -1,0 +1,8 @@
+node_modules
+assets
+.git
+*.log
+*.env
+*.gitignore
+*.md
+*.env-sample

@@ -21,6 +21,16 @@ Latest released model file must contain the word `latest` (Case Insensitive) in 
     ```sh
     npm run start
     ```
+OR
+
+- Build docker image
+    ```sh
+    docker build . -t <TAG>
+    ```
+- Run container
+    ```sh
+    docker run -d --name <CONTAINER_NAME> -p <HOST_PORT>:8000 --mount type=bind,source=$(pwd)/assets,target=/usr/src/app/assets <IMAGE_TAG>
+    ```
 
 ## Endpoints
 
