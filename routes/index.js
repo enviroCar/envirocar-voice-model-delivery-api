@@ -22,7 +22,7 @@ router.get('/refresh', (req,res) => {
     }
     catch(e){
         res.status(500).send("Server Error: Refresh failed")
-        logger.error(e)
+        logger.error(e.toString())
     }
 })
 
@@ -38,18 +38,22 @@ router.get('/latest', async (req,res) => {
         }
 
         latest = latest[0]
-        const data = fs.createReadStream(`./assets/${latest}`);
+        const file = fs.createReadStream(`./assets/${latest}`);
+        const meta = fs.statSync(`./assets/${latest}`)
         const disposition = 'attachment; filename="' + latest + '"';
         
         res.setHeader('Content-Type', 'application/x-7z-compressed');
+        res.setHeader('Content-Length', meta.size);
         res.setHeader('Content-Disposition', disposition);
         
-        data.pipe(res);
+        file.pipe(res);
+
+        // res.download(`/home/ubuntu/enviroCar-model-delivery-api/assets/Vosk-Model-Latest.7z`)
 
     }
     catch(e){
         res.status(500).send("Server Error: An internal server error occured.")
-        logger.error(e)
+        logger.error(e.toString())
     }
     
 })
@@ -82,12 +86,14 @@ router.get('/models/:name', (req,res)=> {
     }
     catch(e){
         res.status(500).send("Server Error: An internal server error occured.")
-        logger.error(e)
+        logger.error(e.toString())
     }
 
 });
 
 router.get('/*', (req,res)=>{
+    logger.debug(`'/*' called by ${req.headers['x-forwarded-for'] || req.socket.remoteAddress}`)
+
     res.status(404).send("Invalid Endpoint: Refer to <a href='https://github.com/devAyushDubey/enviroCar-model-delivery-api#endpoints'>endpoints reference</a>")
 })
 

@@ -27,7 +27,7 @@ const PORT = process.env.PORT
 
 app.listen(PORT , (err) => {
   if(err){
-    logger.error(err)
+    logger.error(err.toString())
   }else{
     logger.info(`App is listening to port ` + PORT)
   }
