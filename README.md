@@ -36,10 +36,10 @@ OR
 
 | Endpoint | Request Type | Description |
 | --- | --- | --- |
-| `latest` | `GET` | Returns the latest model file |
-| `models` | `GET` | Returns a JSON list of available models |
-| `models/:name` | `GET` | Returns model file with the filename `name` if it exists else returns a `404`. Eg: `<address>/models/Vosk-Model-Latest.7z` returns `Vosk-Model-Latest.7z` model file |
-| `refresh` | `GET` | Refreshes the models list and returns the operation result (Useful when new models are added) |
+| `/latest` | `GET` | Returns the latest model file |
+| `/models` | `GET` | Returns a JSON list of available models |
+| `/models/:name` | `GET` | Returns model file with the filename `name` if it exists else returns a `404`. Eg: `<address>/models/Vosk-Model-Latest.7z` returns `Vosk-Model-Latest.7z` model file |
+| `/refresh` | `GET` | Refreshes the models list and returns the operation result (Useful when new models are added) |
 
 ## Logs
 Logs are collected for every request and saved in two files in the project root dirctory:
